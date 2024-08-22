@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home Page</title>
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" href="../../public/css/main.css" />
+  </head>
+
+  <body>
+    <header class="bg-light mb-5 border-bottom">
+      <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light px-lg-0">
+          <a class="navbar-brand" href="../home/index.html">Our E-Com</a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="../home/index.html">Home</a>
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  href="../products/product_catalog_screen.html"
+                  >Product Catalog</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="../cart/index.html">Shopping Cart</a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="../contact/index.html">Contact Us</a>
+              </li>
+            </ul>
+
+            <div
+              class="auth_wrapper d-flex align-items-center ml-auto"
+              id="authWrapper"
+              style="gap: 0.75rem"
+            >
+              <button id="accountButton" class="btn btn-primary rounded d-none">
+                My Account
+              </button>
+              <button id="authButton" class="btn btn-primary rounded">
+                Sign in
+              </button>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <div class="container pb-5">
+      <h1 class="mb-4">Contact Us</h1>
+      <form id="contactForm">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" class="form-control" id="name" required />
+        </div>
+        <div class="form-group">
+          <label for="email">Email address</label>
+          <input type="email" class="form-control" id="email" required />
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone number</label>
+          <input type="tel" class="form-control" id="phone" required />
+        </div>
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea
+            class="form-control"
+            id="message"
+            rows="5"
+            required
+          ></textarea>
+        </div>
+        <div class="text-start">
+          <button type="submit" class="btn btn-primary px-5">Submit</button>
+        </div>
+      </form>
+    </div>
+
+    <footer class="bg-light mt-auto border-top">
+      <div class="container text-center py-3">
+        ©<span>
+          <script>
+            document.write(new Date().getFullYear());
+          </script>
+        </span>
+        Our E-Com All rights reserved
+      </div>
+    </footer>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+      integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      type="text/javascript"
+      src="../bootstrap/js/bootstrap.bundle.js"
+    ></script>
+    <script type="text/javascript" src="../../public/js/main.js"></script>
+
+    <script>
+      /*------------- # Contact Modal    --------------*/
+
+      contactForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        const phone = document.getElementById("phone").value;
+        const message = document.getElementById("message").value;
+
+        if (name && email && phone && message) {
+          const messagesList =
+            JSON.parse(localStorage.getItem("messagesList")) || [];
+          const newMessage = {
+            id: messagesList.length + 1,
+            name,
+            email,
+            phone,
+            message,
+          };
+          messagesList.push(newMessage);
+          localStorage.setItem("messagesList", JSON.stringify(messagesList));
+
+          contactForm.reset();
+          window.scrollTo(0,0);
+          alert("Message sent successfully!");
+        } else {
+          alert("Please fill in all fields.");
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart2</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        :root {
+            --main-color: rgba(247, 221, 201, 0.905);
+            --main-color-hover: rgba(203, 184, 170, 0.905);
+            --font-family: 'Encode Sans Expanded', sans-serif;
+        }
+
+
+        table {
+            background-color: var(--main-color);
+        }
+
+        table i:hover {
+            color: var(--main-color-hover);
+        }
+
+        nav i {
+            color: black;
+        }
+
+        .img {
+            width: 10rem;
+            height: 8rem;
+        }
+
+        .imgemp {
+            width: 60vw;
+            height: 60vh;
+        }
+        .container {
+            overflow: hidden;
+            text-align: justify;
+            border-radius: 10%;
+        }
+
+        .second {
+            float: right;
+        }
+        
+    </style>
+    <script>
+        addEventListener('load', function () {
+
+            let products1 = [];
+
+            var usersList = JSON.parse(localStorage.getItem("usersList")) || [];
+            var cartList = JSON.parse(localStorage.getItem("cartList")) || [];
+            var productsList = JSON.parse(localStorage.getItem("productsList")) || [];
+            var userData = JSON.parse(localStorage.getItem("userData"));
+
+                
+            if (!userData || !usersList.some((user) => user.id == userData?.id )) {
+                let section = document.getElementsByTagName("section")[1];
+                section.style.display = "none";
+                let section1 = document.getElementById("authError");
+                section1.style.display = "block";
+                return;
+            }
+            if(userData?.role != "customer"){
+                window.location.href ="../home/index.html";
+            }
+
+            var userCard = cartList.find((el) => el.cartOwner == userData.id);
+            if (!userCard) {
+                
+                let section = document.getElementsByTagName("section")[1];
+                section.style.display = "none";
+                let section1 = document.getElementById("sec1");
+                section1.style.display = "block";
+
+            } else {
+
+                const existingProducts = userCard.products.filter(cartProduct =>
+                    productsList.some(product => product.id === cartProduct.product.id &&  product.quantity > 0 ) 
+                );
+                userCard.products = existingProducts;
+                localStorage.setItem("cartList", JSON.stringify(cartList));
+                
+                userCard.products.map(ele => {
+                    if(productsList.some((p) => p.id == ele.product.id && p.quantity > 0 )){
+                        const currentProduct = productsList.find(el => el.id == ele.product.id );
+                        obj = {
+                            id: 0,
+                            img: "",
+                            name: "",
+                            price: 0
+                        };
+                        obj.id = currentProduct.id;
+                        obj.img = currentProduct.images[0];
+                        obj.name = currentProduct.name;
+                        obj.price = currentProduct.discount > 0 
+                        ? Math.floor(Number(currentProduct.price) - (Number(currentProduct.price) * Number(currentProduct.discount) / 100)) 
+                        : Number(currentProduct.price);
+                        products1.push(obj);
+                    }
+                });
+                if (products1.length != 0) {
+                    localStorage.setItem("products", JSON.stringify(products1));
+                    productsstring = localStorage.getItem("products");
+                    products = JSON.parse(productsstring);
+
+
+
+                    
+                    gettotal = document.getElementById("total");
+                    // getshipping = document.getElementById("shipping");
+                    x = 1;
+                    price = 0;
+                    allprice = 0;
+                    witninc = 0;
+                    tbody = document.getElementsByTagName("tbody")[0];
+                    creat_tdimg = document.createElement("td");
+                    products.forEach(obj => {
+                        const currentQty = 1 ;
+                        var creat_tr = document.createElement("tr");
+                        let values = Object.values(obj);
+                        for (let i = 0; i < values.length; i++) {
+                            if (i == 0) {
+                                creat_th = document.createElement("th");
+                                creat_th.setAttribute("scope", "row");
+                                creat_th.innerHTML = `${values[i]}`;
+                                creat_tr.appendChild(creat_th);
+                            } else if (i == 1) {
+                                var creatimg = document.createElement('img');
+                                creatimg.src = values[i];
+                                creatimg.className = "img img-fluid";
+                                creattdimg = document.createElement("td");
+                                creattdimg.appendChild(creatimg);
+                                creat_tr.appendChild(creattdimg);
+                            } else {
+                                creattd = document.createElement("td");
+                                creattd.innerHTML = `${values[i]}`;
+                                creat_tr.appendChild(creattd);
+                            }
+                        }
+                        creat_tddelet = document.createElement("td");
+                        var creat_tdnum = document.createElement("td");
+                        var createdinc = document.createElement("i")
+                        createdinc.setAttribute("class", "fa-solid fa-plus");
+                        var num = document.createElement("span");
+                        num.setAttribute("class", "m-2");
+                        num.innerHTML = `${currentQty}`;
+                        var createddec = document.createElement("i")
+                        createddec.setAttribute("class", "fa-solid fa-minus");
+                        creat_tdnum.appendChild(createdinc);
+                        creat_tdnum.appendChild(num);
+                        creat_tdnum.appendChild(createddec);
+
+                        var del = document.createElement("i");
+                        del.setAttribute("class", "fa-solid fa-x")
+                        creat_tddelet.appendChild(del);
+
+                        creat_tr.appendChild(creat_tdnum);
+                        creat_tr.appendChild(creat_tddelet)
+                        tbody.appendChild(creat_tr);
+
+                        createdinc.addEventListener("click", function () {
+                            var products = JSON.parse(localStorage.getItem("productsList")) || [];
+                            incnum = Number(this.nextSibling.innerHTML);
+                            products.map(ele => {
+                                if (ele.id == this.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.innerHTML) {
+                                    qu = Number(ele.quantity);
+                                }
+                            });
+                            if (incnum >= Number(qu)) {
+                                qu = qu ? qu : 1
+                                num.innerHTML = `${qu ? qu : 1 }`;
+                            } else {
+                                inc = parseInt(incnum) + 1
+                                num.innerHTML = `${inc}`;
+                            }
+
+                            if(incnum == Number(qu)){
+                                return;
+                            }
+
+                            incprice = parseInt(this.parentElement.previousSibling.innerHTML);
+                            price = incprice + incprice;
+                            allprice -= incprice;
+                            allprice += price;
+                            
+                            total = allprice;
+                            gettotal.value = `${total}EGP`;
+                            cartlist = JSON.parse(localStorage.getItem("cartList"));
+                            userCard.products.map(elem => {
+                                if (elem.product.id == this.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.innerHTML) {
+                                    elem.count = parseInt(num.innerHTML);
+                                    let price = elem.product.discount > 0 
+                                                ? Math.floor(Number(elem.product.price) - (Number(elem.product.price) * Number(elem.product.discount) / 100)) 
+                                                : Number(elem.product.price);
+
+                                    elem.totalPrice = price * elem.count;
+                                    
+
+                                }
+                            });
+                            userCard.totalCartPrice = allprice;
+                            cartList[parseInt(userCard.id) - 1] = userCard;
+                            localStorage.removeItem("cartList");
+                            localStorage.setItem("cartList", JSON.stringify(cartList));
+                        }); //end of +
+                        createddec.addEventListener("click", function () {
+
+                            decnum = this.previousSibling.innerHTML
+                            dec = parseInt(decnum)
+
+                            if (dec > 1) {
+                                if (dec > 1) {
+                                    dec--;
+                                    // dec = 1;
+                                    num.innerHTML = `${dec}`;
+                                } else {
+                                    num.innerHTML = "1";
+                                }
+                                decprice = parseInt(this.parentElement.previousSibling.innerHTML);
+                                allprice -= decprice;
+
+                            
+                                total = allprice;
+                                gettotal.value = `${total}EGP`;
+
+                                cartlist = JSON.parse(localStorage.getItem("cartList"));
+                                userCard.products.map(elem => {
+                                    if (elem.product.id == this.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.innerHTML) {
+                                        elem.count = dec;
+
+                                        let price = elem.product.discount > 0 
+                                                ? Math.floor(Number(elem.product.price) - (Number(elem.product.price) * Number(elem.product.discount) / 100)) 
+                                                : Number(elem.product.price);
+
+                                        elem.totalPrice = price * elem.count;
+                                    }
+                                });
+                                userCard.totalCartPrice = allprice;
+                                cartList[parseInt(userCard.id) - 1] = userCard;
+                                localStorage.removeItem("cartList");
+                                localStorage.setItem("cartList", JSON.stringify(cartList));
+                            }
+
+
+
+                        }) //end of -
+                        
+                        
+                        del.addEventListener("click", function () {
+                            var vali = confirm("are you sure??");
+                            if (vali) {
+                                var td = this.parentElement
+                                td.parentElement.remove();
+                                iddel = parseInt(this.parentElement.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.innerHTML);
+
+
+                                deletedprice = parseInt(this.parentElement.previousSibling.previousSibling.innerHTML);
+                                updatedprice = deletedprice * parseInt(num.innerHTML);
+                                allprice -= updatedprice;
+                                
+                                total = allprice;
+                                gettotal.value = `${total}EGP`;
+
+                                cartlist = JSON.parse(localStorage.getItem("cartList"));
+                                userCard.products.map(elem => {
+                                    if (elem.product.id == iddel) {
+                                        userCard.products.splice(products.findIndex(i => i.id == iddel), 1);
+                                    }
+                                });
+                                products.splice(products.findIndex(a => a.id == iddel), 1);
+                                localStorage.removeItem("products");
+                                localStorage.setItem("products", JSON.stringify(products));
+                                userCard.totalCartPrice = allprice;
+                                cartList[parseInt(userCard.id) - 1] = userCard;
+                                localStorage.removeItem("cartList");
+                                localStorage.setItem("cartList", JSON.stringify(cartList));
+                            }; // end of condition
+                            if (products.length == 0) {
+                                let section = document.getElementsByTagName("section")[1];
+                                section.style.display = "none";
+                                let section1 = document.getElementById("sec1");
+                                section1.style.display = "block";
+                            }
+                        }); //end of delet
+                    }); // end of build table
+
+                    for (let i = 0; i < products.length; i++) {
+                        val = Object.values(products[i]);
+                        witninc = val[3];
+                        allprice += witninc;
+
+                    };
+                    
+
+                    // shippingval = parseInt(getshipping.value);
+                    total = allprice;
+                    gettotal.value = `${total}EGP`;
+                    cartlist = JSON.parse(localStorage.getItem("cartList"));
+                    userCard.totalCartPrice = allprice;
+                    cartList[parseInt(userCard.id) - 1] = userCard;
+                    localStorage.removeItem("cartList");
+                    localStorage.setItem("cartList", JSON.stringify(cartList));
+                    
+                } else {
+                    let section = document.getElementsByTagName("section")[1];
+                    section.style.display = "none";
+                    let section1 = document.getElementById("sec1");
+                    section1.style.display = "block";
+                }; //end of validate length of Products in cart
+            }; //end of validate user id
+
+        
+          
+            
+        }); //end of load
+    </script>
+</head>
+
+<body>
+   
+
+    <!-- add header -->
+    <header class="bg-light mb-5 border-bottom">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light px-lg-0">
+                <a class="navbar-brand" href="../home/index.html">Our E-Com</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="../home/index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../products/product_catalog_screen.html">Product Catalog</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../cart/index.html">Shopping Cart</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../contact/index.html">Contact Us</a>
+                          </li>
+                       
+                    </ul>
+  
+                    <div class="auth_wrapper d-flex align-items-center ms-auto" id="authWrapper" style="gap: .75rem;">
+                        <button id="accountButton" class="btn btn-primary rounded d-none">My Account</button>
+                        <button id="authButton" class="btn btn-primary rounded">Sign in</button>
+                       
+                    </div>
+                </div>
+  
+            </nav>
+        </div>
+    </header>
+
+
+    <div class="pb-5 px-4" id="authError" style="display: none; text-align: center;">
+        
+        <div class="text-center mb-4">
+            <img  src="pic/empty-cart.svg" alt="" height="250">
+        </div>
+        <h3 class="text-secondary mb-4">You Should login first to add and assess cart</h3>
+        <a href="../sign-in/index.html" class="btn btn-primary text-white btn-lg px-5"> Login </a>
+    
+    </div>
+
+    <section class="pb-5 px-4" id="sec1" style="display: none; text-align: center;">
+
+        <div class="text-center mb-4">
+            <img  src="pic/empty-cart.svg" alt="" height="250">
+        </div>
+        <h3 class="text-secondary">Your cart is empty</h3>
+        <p class="text-secondary  mb-4">looks like you haven't made your choice yet...</p>
+        <a href="../products/product_catalog_screen.html" class="btn btn-primary text-white btn-lg px-5">Go Shopping</a>
+    </section>
+
+
+    <section class="container-fluid text-center pb-5">
+        <div class="row">
+            <div class="col-sm-8 col-12 " >
+                <div class="table-responsive">
+                    <table class="table" >
+                        <thead class="table-light">
+                            <tr>
+                                <th>ID</th>
+                                <th scope="col">Products</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+               
+            </div> <!--your cart-->
+
+            
+
+                <div class=" col-sm-4 col-12" >
+                    <div class="card">
+                        <div style="background-color: var(--main-color-hover); text-align: center; font-size: 2rem;">
+                            The total price
+                        </div>
+                        <div class="card-body text-center">
+                            <h5 class="card-title ">Products :</h5>
+                                
+                                    <img src="pic/free-product-135-781070.webp" height="150">
+                                
+                        </div>
+                        
+                        <h2 style="background-color:var(--main-color); width:10rem ;margin: 0 auto;text-align: center;">
+                            Total :<div class="input-group">
+                                <input type="text" class="form-control text-center" id="total" disabled
+                                    aria-label="Dollar amount (with dot and two decimal places)">
+                            </div>
+                        </h2>
+                        <div class="card-footer mt-2" style="text-align: center;">
+                            <a href="checkout.html" class="btn btn-dark fs-3" >Checkout</a>
+                        </div>
+                    </div>
+                </div>
+            
+        </div> <!--check out-->
+        </div>
+    </section>
+
+    <footer class="bg-light mt-auto border-top">
+        <div class="container text-center  py-3">
+          ©<span>
+            <script>
+              document.write(new Date().getFullYear());
+            </script>
+          </span>
+          Our E-Com All rights reserved
+        </div>
+      </footer>
+    
+    <script src="Js/bootstrap.bundle.js"></script>
+
+
+     <!-- add public js -->
+     <script src="../../public/js/main.js"></script>
+
+     
+
+
+</body>
+
+</html>

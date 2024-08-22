@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta
+      name="viewport"
+      content="height=device-height, 
+                      width=device-width, initial-scale=1.0, 
+                      minimum-scale=1.0, maximum-scale=1.0, 
+                      user-scalable=no"
+    />
+
+    <title>Seller Dashboard</title>
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../assets/css/bootstrap.min.css"
+    />
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../assets/css/fontAwesome.css"
+    />
+
+    <link rel="stylesheet" type="text/css" href="../assets/css/main.css" />
+  </head>
+
+  <body>
+    <div class="root-wrapper">
+      <aside class="sidebar">
+        <div class="slidebar-content">
+          <a class="logoBox" href="#"> Our E-com</a>
+          <ul class="sidebar-list">
+            <li>
+              <a href="index.html">
+                <i class="fa-solid fa-house"></i>
+                home
+              </a>
+            </li>
+            <li>
+              <a href="products.html">
+                <i class="fa-solid fa-list"></i>
+                products
+              </a>
+            </li>
+            <li>
+              <a href="orders.html">
+                <i class="fa-solid fa-cart-shopping"></i>
+                orders
+              </a>
+            </li>
+            <li>
+              <a class="active" href="sales.html">
+                <i class="fa-solid fa-chart-line"></i>
+                sales
+              </a>
+            </li>
+            <li>
+                <a href="profile.html">
+                  <i class="fa-solid fa-user"></i>
+                  profile
+                </a>
+              </li>
+          </ul>
+        </div>
+        <a class="logout-link" href="#">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i>
+          logout
+        </a>
+        <div class="close-sidebar" id="sidebar-close">
+          <i class="fas fa-times"></i>
+        </div>
+      </aside>
+      <main class="page-wrapper">
+        <nav class="top-nav">
+          <div class="container-fluid w-100 h-100">
+            <div class="nav-content">
+              <div class="nav-menu">
+                <button class="btn open-sidebar" id="sidebar-open">
+                  <i class="fa-solid fa-bars"></i>
+                </button>
+              </div>
+              <div class="nav-actions">
+                <a
+                  class="account-btn"
+                  href="profile.html"
+                  aria-expanded="false"
+                >
+                  <img
+                    src="../assets/img/avatar.png"
+                    class="admin-avatar ml-4"
+                  />
+                  <span class="user-name" id="userName"> </span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </nav>
+
+        <section class="section-style orders-section">
+          <div class="container-fluid">
+            <div class="chart-container mb-5">
+              <h1 class="main-title">sales analytics</h1>
+              <canvas id="barChart"></canvas>
+            </div>
+            <div class="chart-container">
+              <h1 class="main-title">Order Status Distribution</h1>
+              <canvas id="pieChart"></canvas>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- jquery 3.5.1   -->
+    <script src="../assets/js/jquery-3.5.1.min.js"></script>
+
+    <!-- bootstrap v5   -->
+    <script src="../assets/js/bootstrap.bundle.min.js"></script>
+
+    <!-- main style js   -->
+    <script src="../assets/js/main.js"></script>
+
+     <!-- sellerAuth script   -->
+     <script src="../assets/js/scripts/sellerAuth.js"></script>
+
+
+     <!-- sales script   -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../assets/js/scripts/sales.js"></script>
+
+   
+  </body>
+</html>

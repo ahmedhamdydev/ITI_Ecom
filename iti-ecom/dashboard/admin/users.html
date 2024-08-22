@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta
+      name="viewport"
+      content="height=device-height, 
+                      width=device-width, initial-scale=1.0, 
+                      minimum-scale=1.0, maximum-scale=1.0, 
+                      user-scalable=no"
+    />
+
+    <title>admin Dashboard</title>
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../assets/css/bootstrap.min.css"
+    />
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../assets/css/fontAwesome.css"
+    />
+
+    <link rel="stylesheet" type="text/css" href="../assets/css/main.css" />
+  </head>
+
+  <body>
+    <div class="root-wrapper">
+      <aside class="sidebar">
+        <div class="slidebar-content">
+          <a class="logoBox" href="#"> Our E-com</a>
+          <ul class="sidebar-list">
+            <li>
+              <a href="index.html">
+                <i class="fa-solid fa-house"></i>
+                home
+              </a>
+            </li>
+            <li>
+              <a class="active" href="users.html">
+                <i class="fa-solid fa-house"></i>
+                users
+              </a>
+            </li>
+            <li>
+              <a href="products.html">
+                <i class="fa-solid fa-list"></i>
+                products
+              </a>
+            </li>
+            <li>
+              <a href="orders.html">
+                <i class="fa-solid fa-cart-shopping"></i>
+                orders
+              </a>
+            </li>
+            <li>
+              <a href="sales.html">
+                <i class="fa-solid fa-chart-line"></i>
+                sales
+              </a>
+            </li>
+            <li>
+              <a href="customer-service.html">
+                <i class="fa-solid fa-headset"></i>
+                customer service
+              </a>
+            </li>
+
+          </ul>
+        </div>
+        <a class="logout-link" href="#">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i>
+          logout
+        </a>
+        <div class="close-sidebar" id="sidebar-close">
+          <i class="fas fa-times"></i>
+        </div>
+      </aside>
+
+      <main class="page-wrapper">
+        <nav class="top-nav">
+          <div class="container-fluid w-100 h-100">
+            <div class="nav-content">
+              <div class="nav-menu">
+                <button class="btn open-sidebar" id="sidebar-open">
+                  <i class="fa-solid fa-bars"></i>
+                </button>
+              </div>
+              <div class="nav-actions">
+                <a class="account-btn" href="#" aria-expanded="false">
+                  <img
+                    src="../assets/img/avatar.png"
+                    class="admin-avatar ml-4"
+                  />
+                  <span class="user-name" id="userName"> </span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </nav>
+
+        <section class="section-style users-section">
+          <div class="container-fluid">
+            <h1 class="main-title">users</h1>
+            <div class="table-responsive">
+              <table class="table table-hover border">
+                <thead class="bg-light">
+                  <tr>
+                    <th>id</th>
+                    <th>name</th>
+                    <th>email</th>
+                    <th>role</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody id="users_table_body"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <div
+          class="modal fade"
+          id="userModal"
+          tabindex="-1"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5">edit user</h1>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body py-4">
+                <div class="profile-form">
+                  <div class="form-group mb-4">
+                    <label class="form-label" for="name">name</label>
+                    <input
+                      type="text"
+                      class="form-control input-focus"
+                      placeholder="enter your name"
+                      id="name"
+                    />
+                  </div>
+                  <div class="form-group mb-4">
+                    <label class="form-label" for="name">email</label>
+                    <input
+                      type="email"
+                      class="form-control input-focus"
+                      placeholder="enter your email"
+                      id="email"
+                    />
+                  </div>
+                  <div class="form-group mb-4">
+                    <label class="form-label" for="password">password</label>
+                    <div class="password-field">
+                      <input
+                        type="password"
+                        class="form-control input-focus password-input"
+                        placeholder="enter your password"
+                        id="password"
+                      /><span aria-hidden="true" class="eye-icon"></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  id="saveUserBtn"
+                  onclick="updateUser()"
+                >
+                  Save
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- jquery 3.5.1   -->
+    <script src="../assets/js/jquery-3.5.1.min.js"></script>
+
+    <!-- bootstrap v5   -->
+    <script src="../assets/js/bootstrap.bundle.min.js"></script>
+
+    <!-- main style js   -->
+    <script src="../assets/js/main.js"></script>
+
+    <!-- adminAuth script   -->
+    <script src="../assets/js/scripts/adminAuth.js"></script>
+
+    <script>
+      let usersList = JSON.parse(localStorage.getItem("usersList")) || [];
+      const usersTableBody = document.getElementById("users_table_body");
+      const saveUserBtn = document.getElementById("saveUserBtn");
+      const userModal = new bootstrap.Modal(
+        document.getElementById("userModal")
+      );
+      let currentUserId = null;
+
+      const renderUsers = () => {
+        usersTableBody.innerHTML = "";
+
+        if (usersList.length === 0) {
+          const tr = document.createElement("tr");
+          tr.innerHTML = `<td colspan="6" class="text-center">No users found</td>`;
+          usersTableBody.appendChild(tr);
+          return;
+        }
+
+        usersList.forEach((user) => {
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+              <td>${user.id}</td>
+              <td>${user.name}</td>
+              <td>${user.email}</td>
+              <td>${user.role}</td>
+              <td>
+                <div class="table-actions">
+                  <button type="button" class="btn btn-info" onclick="editUser(${user.id})">
+                    <i class="fa-solid fa-pen"></i>
+                  </button>
+                  <button type="button" class="btn btn-danger" onclick="deleteUser(${user.id}, '${user.role}')">
+                    <i class="fa-solid fa-trash"></i>
+                  </button>
+                </div>
+              </td>`;
+          usersTableBody.appendChild(tr);
+        });
+      };
+
+      const resetModal = () => {
+        document.getElementById("name").value = "";
+        document.getElementById("email").value = "";
+        document.getElementById("password").value = "";
+        currentUserId = null;
+        clearValidationErrors();
+      };
+
+      const validateInputs = () => {
+        clearValidationErrors();
+        let isValid = true;
+        const name = document.getElementById("name");
+        const email = document.getElementById("email");
+        const password = document.getElementById("password");
+
+        if (!name.value.trim()) {
+          setValidationError(name, "name is required.");
+          isValid = false;
+        }
+
+        if (!validateEmail(email.value)) {
+          setValidationError(email, "Please enter a valid email.");
+          isValid = false;
+        } else if (emailExists(email.value, currentUserId)) {
+          setValidationError(email, "Email already exists.");
+          isValid = false;
+        }
+
+        if (!password.value.trim()) {
+          setValidationError(password, "password is required.");
+          isValid = false;
+        } else if (password.value.length < 6) {
+          setValidationError(
+            password,
+            "Password must be at least 6 characters long."
+          );
+          isValid = false;
+        }
+
+        return isValid;
+      };
+
+      const setValidationError = (element, message) => {
+        element.classList.add("border-danger");
+        const errorDiv = document.createElement("div");
+        errorDiv.classList.add("text-danger");
+        errorDiv.innerText = message;
+        element.parentNode.appendChild(errorDiv);
+      };
+
+      const clearValidationErrors = () => {
+        document
+          .querySelectorAll(".border-danger")
+          .forEach((el) => el.classList.remove("border-danger"));
+        document.querySelectorAll(".text-danger").forEach((el) => el.remove());
+      };
+
+      const validateEmail = (email) => {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(String(email).toLowerCase());
+      };
+
+      const emailExists = (email, userId) => {
+        return usersList.some(
+          (user) => user.email == email && user.id != userId
+        );
+      };
+
+      const editUser = (id) => {
+        const user = usersList.find((el) => el.id == id.toString());
+        if (user) {
+          currentUserId = id;
+          clearValidationErrors();
+          document.getElementById("name").value = user.name;
+          document.getElementById("email").value = user.email;
+          document.getElementById("password").value = user.password;
+          userModal.show();
+        }
+      };
+
+      const deleteUser = (id, role) => {
+        usersList = usersList.filter((user) => user.id != id.toString());
+        localStorage.setItem("usersList", JSON.stringify(usersList));
+
+        if (role === "seller") {
+          let productsList =
+            JSON.parse(localStorage.getItem("productsList")) || [];
+          productsList = productsList.filter((p) => p.seller.id != id);
+          localStorage.setItem("productsList", JSON.stringify(productsList));
+        }
+
+        renderUsers();
+      };
+
+      function updateUser() {
+        if (!validateInputs()) {
+          return;
+        }
+
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+
+        const userIndex = usersList.findIndex(
+          (user) => user.id == currentUserId
+        );
+        if (userIndex !== -1) {
+          usersList[userIndex] = {
+            id: currentUserId,
+            name,
+            email,
+            password,
+            role: usersList[userIndex].role,
+          };
+        }
+        localStorage.setItem("usersList", JSON.stringify(usersList));
+        localStorage.setItem("userData", JSON.stringify(usersList[userIndex]));
+        window.scrollTo(0, 0);
+        renderUsers();
+        resetModal();
+        userModal.hide();
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        renderUsers();
+      });
+    </script>
+  </body>
+</html>

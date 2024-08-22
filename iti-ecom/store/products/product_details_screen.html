@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body{padding: 20px;padding-top: 0px;}
+        .product-detail-card {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .not-found-image {
+            width: 100%;
+            height: 100vh;
+            object-fit: cover;
+        }
+        .product-info {
+            padding: 10px;
+        }
+        .product-name {
+            font-size: 26px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .product-price {
+            margin-bottom: 15px;
+        }
+        .original-price {
+            text-decoration: line-through;
+            color: #888;
+            margin-right: 10px;
+        }
+        .discounted-price {
+            color: #dc3545;
+            font-size: 22px;
+        }
+        .product-description {
+            margin-top: 10px;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        .product-quantity {
+            font-size: 14px;
+            color: #555;
+            margin: 10px 0;
+        }
+        .add-to-cart-button {
+            margin-top: 20px;
+        }
+        .no-product-found img{
+            max-height: 400px;
+            object-fit: contain;
+            max-width: 100%;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- add header -->
+    <header class="bg-light mb-5 border-bottom">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light px-lg-0">
+                <a class="navbar-brand" href="../home/index.html">Our E-Com</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="../home/index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../products/product_catalog_screen.html">Product Catalog</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../cart/index.html">Shopping Cart</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="../contact/index.html">Contact Us</a>
+                          </li>
+                       
+                    </ul>
+  
+                    <div class="auth_wrapper d-flex align-items-center ml-auto" id="authWrapper" style="gap: .75rem;">
+                        <button id="accountButton" class="btn btn-primary rounded d-none">My Account</button>
+                        <button id="authButton" class="btn btn-primary rounded">Sign in</button>
+                       
+                    </div>
+                </div>
+  
+            </nav>
+        </div>
+    </header>
+
+    <div class="product-details-body pb-5">
+        <div class="container ">
+            <h1 class="text-center mb-4">Product Details</h1>
+            <div class="row">
+                <div class="col-md-6">
+                    <div id="productImageCarousel" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators">
+                            <!-- Indicators will be dynamically added here -->
+                        </ol>
+                        <div class="carousel-inner">
+                            <!-- Carousel Images will be dynamically added here -->
+                        </div>
+                        <a class="carousel-control-prev" href="#productImageCarousel" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#productImageCarousel" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="product-detail-card">
+                        <div class="product-info">
+                            <p class="product-name">Product Name</p>
+                            <p class="product-seller">Seller : seller name</p>
+                            <p class="product-price">$120</p>
+                            <p class="product-description">The product description goes here. This text is a placeholder and can be replaced with the actual product description.</p>
+                            <p class="product-quantity">Quantity: 50</p>
+                            <div class="add-to-cart-button m-0">
+                                <button class="btn btn-primary btn-block mt-3" id="AddToCardBtn">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-light mt-auto border-top">
+        <div class="container text-center  py-3">
+          ©<span>
+            <script>
+              document.write(new Date().getFullYear());
+            </script>
+          </span>
+          Our E-Com All rights reserved
+        </div>
+      </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="product_details_screen.js"></script>
+
+    <!-- add public js -->
+    <script src="../../public/js/main.js"></script>
+
+</body>
+</html>

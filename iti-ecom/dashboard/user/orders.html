@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Account</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../assets/css/bootstrap.min.css"
+    />
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../assets/css/fontAwesome.css"
+    />
+    <link rel="stylesheet" href="../../public/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="../assets/css/main.css" />
+
+    <style>
+      .order-item {
+        background-color: #eee;
+        border-radius: 10px;
+        position: relative;
+        margin-bottom: 1.5rem;
+        padding: 1.5rem;
+      }
+      .order-item:last-child {
+        margin-bottom: 0;
+      }
+      .order-item .info-flex {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .order-item .order-id {
+        font-weight: bold;
+        font-size: 24px;
+      }
+
+      .order-item .info-text {
+        font-size: 16px;
+        font-weight: 500;
+        margin-bottom: 0;
+      }
+      .order-item .info-text span {
+        font-weight: bold;
+      }
+
+      .order-item .order-status {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+      }
+      .order-item .status-item {
+        padding: 0.25rem 0.5rem;
+        text-align: center;
+        background-color: #ccc;
+        text-transform: capitalize;
+        font-weight: 500;
+        border-radius: 4px;
+      }
+
+      .order-item .status-item.shipped {
+        background-color: #0aad0a;
+        color: #fff;
+      }
+      .order-item .status-item.canceled {
+        background-color: #dc3545;
+        color: #fff;
+      }
+      .order-item .status-item.processing {
+        background-color: #0dcaf0;
+        color: #000;
+      }
+
+      .order-item .order-head > *:not(:last-child) {
+        margin-bottom: 1rem;
+      }
+
+      .order-item .order-items {
+        margin-top: 1.5rem;
+      }
+      .order-item .order-items .item-card {
+        display: flex;
+        position: relative;
+        gap: 1.5rem;
+        border-top: 1px solid #ccc;
+        padding-top: 1.5rem;
+        margin-top: 1.5rem;
+      }
+
+      .order-item .order-items .item-card .item-img {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+        flex-shrink: 0;
+        width: 80px;
+        height: 80px;
+      }
+      .order-item .order-items .item-card .item-img img {
+        object-fit: contain;
+        mix-blend-mode: multiply;
+        height: 100%;
+        width: 100%;
+      }
+      .order-item .order-items .item-card .item-details {
+        flex: 1;
+      }
+
+      .order-item .order-items .item-card .item-title {
+        font-weight: bold;
+        font-size: 16px;
+        transition: all 0.3s ease;
+      }
+      .order-item .order-items .item-card .item-title a {
+        transition: inherit;
+      }
+
+      .order-item .order-items .item-card .item-title a:hover {
+        color: #0d6efd;
+      }
+
+      .order-item .order-items .item-card .item-text {
+        font-size: 16px;
+        font-weight: 500;
+      }
+
+      .order-item .order-items .item-card .item-details > *:not(:last-child) {
+        margin-bottom: 0.75rem;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header class="bg-light mb-5 border-bottom">
+      <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light px-lg-0">
+          <a class="navbar-brand" href="../../store/home/index.html"
+            >Our E-Com</a
+          >
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="../../store/home/index.html">Home</a>
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  href="../../store/products/product_catalog_screen.html"
+                  >Product Catalog</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="../../store/cart/index.html"
+                  >Shopping Cart</a
+                >
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="../../store/contact/index.html"
+                  >Contact Us</a
+                >
+              </li>
+            </ul>
+
+            <div
+              class="auth_wrapper d-flex align-items-center ms-auto"
+              id="authWrapper"
+              style="gap: 0.75rem"
+            >
+              <button id="accountButton" class="btn btn-primary rounded d-none">
+                My Account
+              </button>
+              <button id="authButton" class="btn btn-primary rounded">
+                Sign in
+              </button>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <section class="section-style pb-5 account-section">
+      <div class="container">
+        <div class="row gx-lg-5">
+          <div class="col-lg-3 mb-5 mb-lg-0">
+            <div class="account-tabs">
+              <ul class="tab-list">
+                <li class="list-item">
+                  <a class="item-link" href="./index.html"
+                    ><span><i class="fa-solid fa-user"></i></span>Profile
+                    Info</a
+                  >
+                </li>
+                <li class="list-item">
+                  <a class="item-link active" href="./orders.html"
+                    ><span><i class="fa-solid fa-truck-fast"></i></span
+                    >orders</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-9">
+            <h1 class="wrapper-title pb-4 mb-4 border-bottom">Orders</h1>
+            <div class="orders-boxes" id="ordersBoxes"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="bg-light mt-auto border-top">
+      <div class="container text-center py-3">
+        ©<span>
+          <script>
+            document.write(new Date().getFullYear());
+          </script>
+        </span>
+        Our E-Com All rights reserved
+      </div>
+    </footer>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+      integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      type="text/javascript"
+      src="../../store/bootstrap/js/bootstrap.bundle.js"
+    ></script>
+    <script type="text/javascript" src="../../public/js/main.js"></script>
+
+    <script>
+      const ordersList = JSON.parse(localStorage.getItem("ordersList")) || [];
+      const userData = JSON.parse(localStorage.getItem("userData")) || {};
+      const ordersBoxes = document.getElementById("ordersBoxes");
+
+      const MyOrders = ordersList.filter((el) => el.orderOwner == userData.id);
+
+      const integrateOrders = (orders) => {
+        const orderMap = {};
+
+        orders.forEach((order) => {
+          const { orderId, products, totalOrderPrice, orderStatus } = order;
+
+          const mappedProducts = products.map((productObj) => ({
+            ...productObj,
+            orderStatus,
+          }));
+
+          if (!orderMap[orderId]) {
+            orderMap[orderId] = {
+              ...order,
+              products: mappedProducts,
+              totalOrderPrice: totalOrderPrice,
+            };
+          } else {
+            orderMap[orderId].products.push(...mappedProducts);
+            orderMap[orderId].totalOrderPrice += totalOrderPrice;
+          }
+        });
+
+        return Object.values(orderMap);
+      };
+      const integratedOrders = integrateOrders(MyOrders);
+
+      function renderOrders() {
+        ordersBoxes.innerHTML = "";
+
+        if (MyOrders.length === 0) {
+          ordersBoxes.innerHTML = `
+            <div class="alert alert-info w-100 text-center">No Orders Found</div>
+            `;
+          return;
+        }
+
+        integratedOrders.reverse().forEach((order) => {
+          const orderBox = document.createElement("div");
+          orderBox.classList.add("order-item");
+          orderBox.innerHTML = `
+          <div class="order-head">
+                  <h3 class="order-id">${order.orderId}</h3>
+                  <div class="info-flex">
+                    
+                    <p class="info-text mb-0">
+                      <span>Date : </span> ${order.createdAt.split("T")[0]} 
+                    </p>
+                    
+                  </div>
+                  <p class="info-text"><span>Quantity : </span> ${
+                    order.products.length
+                  } </p>
+                  <p class="info-text">
+                    <span>Total Price : </span> ${order.totalOrderPrice} EGP
+                  </p>
+                  <p class="info-text">
+                    <span>Payment Method : </span> ${order.paymentMethodType}
+                  </p>
+                </div>
+                <div class="order-items">
+                  ${order.products
+                    .map(
+                      (el) =>
+                        `
+                    <div class="item-card">
+                    <div class="item-img position-relative">
+                      <a
+                        class="d-block h-100"
+                        href="/product/6408cb846406cd15828e8ec2/4K+Smart+LED+TV+55+Inch+With+Android+System+WiFi+Connection+3+HDMI+and+2+USB+Inputs+KD-55X7500H+Black+-+WE+Offer+100+GB+Free+for+3+Months+KD-55X7500H+Black"
+                        ><img
+                          class="opacity-100 img-fluid w-100 loading-img"
+                          src="${el.product.images[0]}"
+                          alt="${el.product.name}"
+                      /></a>
+                    </div>
+                    <div class="item-details">
+
+                      <div class="d-flex align-items-center justify-content-between gap-3">
+                        <h4 class="item-title mb-0">
+                          <a
+                            href="${
+                              window.location.origin
+                            }/store/products/product_details_screen.html?id=${
+                          el.product.id
+                        }"
+                            >
+                              ${el.product.name}
+                            </a
+                          >
+                        </h4>
+                        <div class="status-item ${
+                          el.orderStatus === "processing"
+                            ? "processing"
+                            : el.orderStatus === "shipped"
+                            ? "shipped"
+                            : el.orderStatus === "canceled"
+                            ? "canceled"
+                            : ""
+                        }">${el.orderStatus}</div>
+                      </div>
+                      
+                      <p class="item-text">price : ${
+                        el.product.discount > 0
+                          ? Math.floor(
+                              Number(el.product.price) -
+                                (Number(el.product.price) *
+                                  Number(el.product.discount)) /
+                                  100
+                            )
+                          : Number(el.product.price)
+                      } EGP</p>
+                      <p class="item-text">Quantity : ${el.count}</p>
+                    </div>
+                  </div>
+                    `
+                    )
+                    .join("")}
+                
+                </div>
+
+          `;
+          ordersBoxes.appendChild(orderBox);
+        });
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        renderOrders();
+      });
+    </script>
+  </body>
+</html>

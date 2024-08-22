@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Account</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../assets/css/bootstrap.min.css"
+    />
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../assets/css/fontAwesome.css"
+    />
+    <link rel="stylesheet" href="../../public/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="../assets/css/main.css" />
+
+    
+  </head>
+
+  <body>
+    <header class="bg-light mb-5 border-bottom">
+      <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light px-lg-0">
+          <a class="navbar-brand" href="../../store/home/index.html"
+            >Our E-Com</a
+          >
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="../../store/home/index.html">Home</a>
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  href="../../store/products/product_catalog_screen.html"
+                  >Product Catalog</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="../../store/cart/index.html"
+                  >Shopping Cart</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="../../store/contact/index.html">Contact Us</a>
+              </li>
+
+            </ul>
+
+            <div
+              class="auth_wrapper d-flex align-items-center ms-auto"
+              id="authWrapper"
+              style="gap: 0.75rem"
+            >
+              <button id="accountButton" class="btn btn-primary rounded d-none">
+                My Account
+              </button>
+              <button id="authButton" class="btn btn-primary rounded">
+                Sign in
+              </button>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <section class="section-style pb-5 account-section">
+      <div class="container">
+        <div class="row gx-lg-5">
+          <div class="col-lg-3 mb-5 mb-lg-0">
+            <div class="account-tabs">
+              <ul class="tab-list">
+                <li class="list-item">
+                  <a class="item-link active" href="./index.html"
+                    ><span><i class="fa-solid fa-user"></i></span>Profile
+                    Info</a
+                  >
+                </li>
+                <li class="list-item">
+                  <a class="item-link" href="./orders.html"
+                    ><span><i class="fa-solid fa-truck-fast"></i></span
+                    >orders</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-9">
+            <h1 class="wrapper-title pb-4 mb-4 border-bottom">Profile Info</h1>
+            <div class="profile-form">
+              <div class="form-group mb-4">
+                <label class="form-label" for="name">name</label>
+                <input
+                  type="text"
+                  class="form-control input-focus"
+                  placeholder="enter your name"
+                  id="name"
+                />
+              </div>
+              <div class="form-group mb-4">
+                <label class="form-label" for="name">email</label>
+                <input
+                  type="email"
+                  class="form-control input-focus"
+                  placeholder="enter your email"
+                  id="email"
+                />
+              </div>
+              <div class="form-group mb-4">
+                <label class="form-label" for="password">password</label>
+                <div class="password-field">
+                  <input
+                    type="password"
+                    class="form-control input-focus password-input"
+                    placeholder="enter your password"
+                    id="password"
+                  /><span aria-hidden="true" class="eye-icon"></span>
+                </div>
+              </div>
+              <div class="form-group mb-4">
+                <button
+                  type="button"
+                  class="btn btn-primary fs-6 px-5"
+                  onclick="saveProfile()"
+                >
+                  Save
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="bg-light mt-auto border-top">
+      <div class="container text-center py-3">
+        ©<span>
+          <script>
+            document.write(new Date().getFullYear());
+          </script>
+        </span>
+        Our E-Com All rights reserved
+      </div>
+    </footer>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+      integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      type="text/javascript"
+      src="../../store/bootstrap/js/bootstrap.bundle.js"
+    ></script>
+    <script type="text/javascript" src="../../public/js/main.js"></script>
+
+    
+    <!-- main style js   -->
+    <script src="../assets/js/main.js"></script>
+   
+    <!-- profile script   -->
+    <script src="../assets/js/scripts/profile.js"></script>
+    
+  </body>
+</html>

@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta
+      name="viewport"
+      content="height=device-height, 
+                      width=device-width, initial-scale=1.0, 
+                      minimum-scale=1.0, maximum-scale=1.0, 
+                      user-scalable=no"
+    />
+
+    <title>Seller Dashboard</title>
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../assets/css/bootstrap.min.css"
+    />
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../assets/css/fontAwesome.css"
+    />
+
+    <link rel="stylesheet" type="text/css" href="../assets/css/main.css" />
+  </head>
+
+  <body>
+    <div class="root-wrapper">
+      <aside class="sidebar">
+        <div class="slidebar-content">
+          <a class="logoBox" href="#"> Our E-com</a>
+          <ul class="sidebar-list">
+            <li>
+              <a href="index.html">
+                <i class="fa-solid fa-house"></i>
+                home
+              </a>
+            </li>
+            <li>
+              <a class="active" href="products.html">
+                <i class="fa-solid fa-list"></i>
+                products
+              </a>
+            </li>
+            <li>
+              <a href="orders.html">
+                <i class="fa-solid fa-cart-shopping"></i>
+                orders
+              </a>
+            </li>
+            <li>
+              <a href="sales.html">
+                <i class="fa-solid fa-chart-line"></i>
+                sales
+              </a>
+            </li>
+            <li>
+              <a href="profile.html">
+                <i class="fa-solid fa-user"></i>
+                profile
+              </a>
+            </li>
+          </ul>
+        </div>
+        <a class="logout-link" href="#">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i>
+          logout
+        </a>
+        <div class="close-sidebar" id="sidebar-close">
+          <i class="fas fa-times"></i>
+        </div>
+      </aside>
+      <main class="page-wrapper">
+        <nav class="top-nav">
+          <div class="container-fluid w-100 h-100">
+            <div class="nav-content">
+              <div class="nav-menu">
+                <button class="btn open-sidebar" id="sidebar-open">
+                  <i class="fa-solid fa-bars"></i>
+                </button>
+              </div>
+              <div class="nav-actions">
+                <a
+                  class="account-btn"
+                  href="profile.html"
+                  aria-expanded="false"
+                >
+                  <img
+                    src="../assets/img/avatar.png"
+                    class="admin-avatar ml-4"
+                  />
+                  <span class="user-name" id="userName"> </span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </nav>
+
+        <section class="section-style products-section">
+          <div class="container-fluid">
+            <div
+              class="d-flex align-items-center justify-content-between gap-3 mb-4 pb-2"
+            >
+              <h1 class="main-title mb-0">products</h1>
+              <button
+                type="button"
+                class="btn btn-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#productModal"
+              >
+                <i class="fa-solid fa-plus"></i>
+                Add Product
+              </button>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-hover border">
+                <thead class="bg-light">
+                  <tr id="products_table_head_tr"></tr>
+                </thead>
+                <tbody id="products_table_body"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <div
+          class="modal fade"
+          id="productModal"
+          tabindex="-1"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="productModalLabel">
+                  add product
+                </h1>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body py-4">
+                <div class="row row-cols-md-2 gy-4">
+                  <div class="form-group w-100">
+                    <label
+                      class="form-label product_images_label"
+                      for="product_images"
+                    >
+                      <i class="fa-solid fa-plus"></i> Add Images
+                    </label>
+                    <input
+                      type="file"
+                      placeholder="Add product images"
+                      id="product_images"
+                      hidden
+                      multiple
+                      onchange="handleFileSelect(event)"
+                    />
+                    <div
+                      id="selectedImagesContainer"
+                      class="row row-cols-md-4 row-cols-2 gx-3 gy-3"
+                    ></div>
+                  </div>
+
+                  <div class="form-group w-100">
+                    <label class="form-label" for="product_name"
+                      >product name</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control input-focus"
+                      placeholder="enter product name"
+                      id="product_name"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="product_price"
+                      >product price</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control input-focus"
+                      placeholder="enter product price"
+                      id="product_price"
+                      oninput="validateNumberInput(this)"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="product_discount"
+                      >product discount</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control input-focus"
+                      placeholder="enter product discount"
+                      id="product_discount"
+                      oninput="validateNumberInput(this)"
+                    />
+                  </div>
+
+                  <div class="form-group">
+                    <label class="form-label" for="product_quantity"
+                      >product quantity</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control input-focus"
+                      placeholder="enter product quantity"
+                      id="product_quantity"
+                      oninput="validateNumberInput(this)"
+                    />
+                  </div>
+
+                  <div class="form-group">
+                    <label class="form-label" for="product_category"
+                      >product category</label
+                    >
+                    <select
+                      class="form-select input-focus"
+                      aria-label="Default select example"
+                      id="product_category"
+                    >
+                      <option selected disabled>choose product category</option>
+                      
+                    </select>
+                  </div>
+
+                  <div class="form-group w-100">
+                    <label class="form-label" for="product_description"
+                      >product description</label
+                    >
+                    <textarea
+                      class="form-control input-focus"
+                      placeholder="enter product description"
+                      id="product_description"
+                      rows="4"
+                    ></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  id="saveProductBtn"
+                >
+                  Save
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- jquery 3.5.1   -->
+    <script src="../assets/js/jquery-3.5.1.min.js"></script>
+
+    <!-- bootstrap v5   -->
+    <script src="../assets/js/bootstrap.bundle.min.js"></script>
+
+    <!-- main style js   -->
+    <script src="../assets/js/main.js"></script>
+
+     <!-- sellerAuth script   -->
+     <script src="../assets/js/scripts/sellerAuth.js"></script>
+
+
+    <!-- products script   -->
+    <script src="../assets/js/scripts/products.js"></script>
+
+    <!-- <script>
+      const productsTableBody = document.getElementById("products_table_body");
+      const productModalLabel = document.getElementById("productModalLabel");
+      const saveProductBtn = document.getElementById("saveProductBtn");
+      const productModal = new bootstrap.Modal(
+        document.getElementById("productModal")
+      );
+      const selectedImagesContainer = document.getElementById(
+        "selectedImagesContainer"
+      );
+      const userData = JSON.parse(localStorage.getItem("userData"));
+
+      let products = JSON.parse(localStorage.getItem("productsList")) || [];
+      let currentProductId = null;
+      let selectedImages = [];
+
+      const renderProducts = () => {
+        productsTableBody.innerHTML = "";
+        let currentProducts;
+
+        if (userData.role === "seller") {
+          currentProducts = products.filter(
+            (el) => el.seller.id == userData.id
+          );
+        } else if (userData.role === "admin") {
+          currentProducts = products;
+        } else {
+          currentProducts = [];
+        }
+
+        if (currentProducts.length === 0) {
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+              <td colspan="6" class="text-center">No products found</td>
+            `;
+          productsTableBody.appendChild(tr);
+          return;
+        }
+
+        currentProducts.forEach((product) => {
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+              <td>${product.id}</td>
+              <td>${product.name}</td>
+              <td>${product.price} EGP</td>
+              <td>${product.quantity}</td>
+              <td>${product.category.name}</td>
+              <td>
+                <div class="table-actions">
+                  <button type="button" class="btn btn-info" onclick="editProduct(${product.id})">
+                    <i class="fa-solid fa-pen"></i>
+                  </button>
+                  <button type="button" class="btn btn-danger" onclick="deleteProduct(${product.id})">
+                    <i class="fa-solid fa-trash"></i>
+                  </button>
+                </div>
+              </td>
+            `;
+          productsTableBody.appendChild(tr);
+        });
+      };
+
+      const resetModal = () => {
+        document.getElementById("product_name").value = "";
+        document.getElementById("product_price").value = "";
+        document.getElementById("product_discount").value = "";
+        document.getElementById("product_quantity").value = "";
+        document.getElementById("product_category").selectedIndex = 0; // Set to the placeholder option
+        document.getElementById("product_description").value = "";
+        clearValidationErrors();
+        currentProductId = null;
+        selectedImages = [];
+      };
+
+      const validateInputs = () => {
+        clearValidationErrors();
+        let isValid = true;
+        const name = document.getElementById("product_name");
+        const imageInput = document.getElementById("product_images");
+        const price = document.getElementById("product_price");
+        const discount = document.getElementById("product_discount");
+        const quantity = document.getElementById("product_quantity");
+        const category = document.getElementById("product_category");
+        const description = document.getElementById("product_description");
+
+        if (!name.value.trim()) {
+          setValidationError(name, "Product name is required.");
+          isValid = false;
+        }
+
+        if (selectedImages.length === 0) {
+          setValidationError(imageInput, "Please select at least one image.");
+          isValid = false;
+        }
+
+        if (!price.value.trim()) {
+          setValidationError(price, "Product price is required.");
+          isValid = false;
+        }
+        if (!discount.value.trim()) {
+          setValidationError(discount, "Product discount is required.");
+          isValid = false;
+        } else if (
+          isNaN(discount.value.trim()) ||
+          parseInt(discount.value.trim()) < 1 ||
+          parseInt(discount.value.trim()) > 99
+        ) {
+          setValidationError(
+            discount,
+            "Discount must be a  between 1% and 99%."
+          );
+          isValid = false;
+        }
+        if (!quantity.value.trim()) {
+          setValidationError(quantity, "Product quantity is required.");
+          isValid = false;
+        }
+        if (category.selectedIndex === 0) {
+          setValidationError(category, "Product category is required.");
+          isValid = false;
+        }
+        if (!description.value.trim()) {
+          setValidationError(description, "Product description is required.");
+          isValid = false;
+        }
+
+        return isValid;
+      };
+
+      const setValidationError = (element, message) => {
+        element.classList.add("border-danger");
+        const errorDiv = document.createElement("div");
+        errorDiv.classList.add("text-danger");
+        errorDiv.innerText = message;
+        element.parentNode.appendChild(errorDiv);
+      };
+
+      const clearValidationErrors = () => {
+        document
+          .querySelectorAll(".border-danger")
+          .forEach((el) => el.classList.remove("border-danger"));
+        document.querySelectorAll(".text-danger").forEach((el) => el.remove());
+      };
+
+      const addProduct = () => {
+        if (!validateInputs()) return;
+
+        const name = document.getElementById("product_name").value;
+        const price = document.getElementById("product_price").value;
+        const discount = document.getElementById("product_discount").value;
+        const quantity = document.getElementById("product_quantity").value;
+        const category = document.getElementById("product_category").value;
+        const description = document.getElementById(
+          "product_description"
+        ).value;
+        const id = products.length
+          ? Math.max(...products.map((p) => parseInt(p.id))) + 1
+          : 1;
+        const newProduct = {
+          id: id.toString(),
+          images: selectedImages.slice(),
+          name,
+          description,
+          price,
+          discount,
+          quantity,
+          category: {
+            id: category.toLowerCase(),
+            name: category,
+          },
+          seller: {
+            id: userData?.id,
+            name: userData?.name,
+          },
+        };
+        products.push(newProduct);
+        localStorage.setItem("productsList", JSON.stringify(products));
+        renderProducts();
+        resetModal();
+        productModal.hide();
+      };
+
+      const editProduct = (id) => {
+        const product = products.find((p) => p.id == id.toString());
+        if (product) {
+          clearValidationErrors();
+          currentProductId = id;
+          productModalLabel.innerText = "Edit Product";
+          document.getElementById("product_name").value = product.name;
+          document.getElementById("product_price").value = product.price;
+          document.getElementById("product_discount").value = product.discount;
+          document.getElementById("product_quantity").value = product.quantity;
+          document.getElementById("product_category").value =
+            product.category.name;
+          document.getElementById("product_description").value =
+            product.description;
+
+          // images handle
+          selectedImages = product.images.slice();
+          selectedImagesContainer.innerHTML = "";
+          product.images.forEach((image) => {
+            const imageContainer = document.createElement("div");
+            imageContainer.classList.add("selected-image-item");
+
+            const imgElement = document.createElement("img");
+            imgElement.classList.add("selected-image");
+            imgElement.src = image;
+            imageContainer.appendChild(imgElement);
+
+            const deleteBtn = document.createElement("button");
+            deleteBtn.classList.add("btn", "btn-danger", "delete-image-btn");
+            deleteBtn.innerHTML = '<i class="fa-solid fa-trash"></i>';
+            deleteBtn.addEventListener("click", () => {
+              const index = selectedImages.indexOf(image);
+              if (index !== -1) {
+                selectedImages.splice(index, 1);
+                imageContainer.remove();
+              }
+            });
+            imageContainer.appendChild(deleteBtn);
+
+            selectedImagesContainer.appendChild(imageContainer);
+          });
+          // images handle
+
+          productModal.show();
+          console.log(selectedImages);
+        }
+      };
+
+      const updateProduct = () => {
+        if (!validateInputs()) return;
+
+        const name = document.getElementById("product_name").value;
+        const price = document.getElementById("product_price").value;
+        const discount = document.getElementById("product_discount").value;
+        const quantity = document.getElementById("product_quantity").value;
+        const category = document.getElementById("product_category").value;
+        const description = document.getElementById(
+          "product_description"
+        ).value;
+        products = products.map((p) =>
+          p.id === currentProductId.toString()
+            ? {
+                ...p,
+                images: selectedImages.slice(),
+                name,
+                price,
+                discount,
+                quantity,
+                category: { id: category.toLowerCase(), name: category },
+                description,
+              }
+            : p
+        );
+        localStorage.setItem("productsList", JSON.stringify(products));
+        renderProducts();
+        resetModal();
+        productModal.hide();
+      };
+
+      const deleteProduct = (id) => {
+        products = products.filter((p) => p.id !== id.toString());
+        localStorage.setItem("productsList", JSON.stringify(products));
+        renderProducts();
+      };
+
+      saveProductBtn.addEventListener("click", () => {
+        if (currentProductId === null) {
+          addProduct();
+        } else {
+          updateProduct();
+        }
+      });
+
+      $("[data-bs-target='#productModal']").on("click", () => {
+        selectedImagesContainer.innerHTML = "";
+        resetModal();
+        productModalLabel.innerText = "Add Product";
+        console.log(selectedImages);
+      });
+
+      const validateNumberInput = (input) => {
+        input.value = input.value.replace(/\D/g, "");
+      };
+
+      const handleFileSelect = (event) => {
+        const files = event.target.files;
+        // Display selected images
+        for (let i = 0; i < files.length; i++) {
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            // Create elements dynamically
+            const imageContainer = document.createElement("div");
+            imageContainer.classList.add("selected-image-item");
+
+            const imgElement = document.createElement("img");
+            imgElement.classList.add("selected-image");
+            imgElement.src = e.target.result;
+            imageContainer.appendChild(imgElement);
+
+            const deleteBtn = document.createElement("button");
+            deleteBtn.classList.add("btn", "btn-danger", "delete-image-btn");
+            deleteBtn.innerHTML = '<i class="fa-solid fa-trash"></i>';
+            deleteBtn.addEventListener("click", () => {
+              const index = selectedImages.indexOf(e.target.result);
+              if (index !== -1) {
+                selectedImages.splice(index, 1);
+                imageContainer.remove();
+              }
+            });
+            imageContainer.appendChild(deleteBtn);
+
+            // Append image container to container
+            const selectedImagesContainer = document.getElementById(
+              "selectedImagesContainer"
+            );
+            selectedImagesContainer.appendChild(imageContainer);
+
+            // Save base64 data or image URLs
+            selectedImages.push(e.target.result);
+          };
+          reader.readAsDataURL(files[i]);
+        }
+        event.target.value = "";
+      };
+
+      document.addEventListener("DOMContentLoaded", () => {
+        renderProducts();
+      });
+    </script>
+   -->
+  </body>
+</html>

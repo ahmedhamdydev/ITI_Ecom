@@ -1,0 +1,111 @@
+/*------------- #navbar--------------*/
+@media (max-width: 991.98px) {
+  .auth_wrapper {
+    margin: 0.75rem 0;
+  }
+}
+
+/*------------- #product-card--------------*/
+
+.product-card {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 15px;
+  margin: 15px 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+.product-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 5px;
+  transition: transform 0.5s ease;
+}
+.product-image:hover {
+  transform: scale(1.1);
+}
+.product-info {
+  padding: 10px;
+}
+.product-name {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 10px 0;
+}
+.product-price {
+  margin: 10px 0;
+}
+.original-price {
+  text-decoration: line-through;
+  color: #b52222;
+  margin-right: 10px;
+}
+.discounted-price {
+  color: #24b256;
+  font-size: 16px;
+}
+.product-quantity {
+  font-size: 14px;
+  color: #555;
+  margin: 10px 0;
+}
+.product-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.btn-full-width {
+  width: 100%;
+}
+.no-product-found img {
+  max-height: 300px;
+  object-fit: contain;
+  max-width: 100%;
+}
+
+/*------------- #user-dashboard--------------*/
+
+
+.account-tabs {
+  padding: 1.5rem 1.5rem;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+}
+.account-tabs .tab-list {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.account-tabs .tab-list .item-link {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem;
+  transition: all 0.3s ease;
+  gap: 0.5rem;
+  font-size: 18px;
+  border-radius: 10px;
+  font-weight: 600;
+  color: #000;
+  text-decoration: none;
+  text-transform: capitalize;
+}
+.account-tabs .tab-list .item-link.active {
+  background-color: #0d6efd;
+  color: #fff;
+}
+.account-tabs .tab-list .item-link:hover:not(.active) {
+  background-color: #eee;
+}
+
+.account-section .wrapper-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #dee2e6;
+}
